@@ -1,0 +1,6 @@
+@OnePieceTheoryGeneratingAI.Api_HostAddress = http://localhost:5127
+
+GET {{OnePieceTheoryGeneratingAI.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
