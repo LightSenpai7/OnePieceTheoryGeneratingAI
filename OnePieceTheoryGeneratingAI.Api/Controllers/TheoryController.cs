@@ -28,12 +28,23 @@ namespace OnePieceTheoryGeneratingAI.Api.Controllers
             {
                 var theory = await _openAiService.CompleteSentence(request.Category, request.UserThoughts);
 
-                return Ok(new { theory });
+                var response = new TheoryResponse
+                {
+                    Theory = theory
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
+        public class TheoryResponse
+        {
+            public string Theory { get; set; }
+        }
+
     }
 }
