@@ -14,9 +14,9 @@
         <div class="col-md-12 mb-3">
             <select name="category" id="category" required class="form-select" aria-label="Default select example">
                 <option selected value="">Select Category</option>
-                <option value="1">Character</option>
-                <option value="2">Episode</option>
-                <option value="3">Universe</option>
+                <option value="Character">Character</option>
+                <option value="Episode">Episode</option>
+                <option value="Universe">Universe</option>
             </select>
         </div>
         <div class="col-md-12 mb-3">
@@ -62,23 +62,26 @@
 
                 const csrfToken = $('input[name="__RequestVerificationToken"]').val();
 
+                console.log(category);
+
                 $.ajax({
                     url: '@Url.Action("Index", "Home")',
                     type: 'POST',
                     headers: {
                         'RequestVerificationToken': csrfToken
                     },
-                    contentType: 'application/json',
-                    data: JSON.stringify({
+                    data: ({
                         category: category,
                         userThoughts: userThoughts
                     }),
-                    success: function (result) {
-                        if (result.success) {
-                            $('#responseText').text(result.theory).removeClass('text-danger');
+                       success: function (result) {
+                        let response = typeof result === "string" ? JSON.parse(result) : result;
+
+                        if (response.success) {
+                            $('#responseText').text(response.theory).removeClass('text-danger');
                             $('#responseFooter').text('Generated successfully.');
                         } else {
-                            $('#responseText').text(result.message).addClass('text-danger');
+                            $('#responseText').text(response.message).addClass('text-danger');
                         }
                     },
                     error: function () {

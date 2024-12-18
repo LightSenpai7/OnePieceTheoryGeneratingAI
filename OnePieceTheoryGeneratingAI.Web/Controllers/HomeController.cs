@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using OnePieceTheoryGeneratingAI.Web.Models;
+using OnePieceTheoryGeneratingAI.Entities.ViewModels;
 
 namespace OnePieceTheoryGeneratingAI.Web.Controllers
 {
@@ -19,12 +20,14 @@ namespace OnePieceTheoryGeneratingAI.Web.Controllers
 
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(string category, string userThoughts)
         {
             if (string.IsNullOrEmpty(category) || string.IsNullOrEmpty(userThoughts))
@@ -59,9 +62,10 @@ namespace OnePieceTheoryGeneratingAI.Web.Controllers
                 }
 
                 var responseData = await response.Content.ReadAsStringAsync();
-                var theoryResponse = JsonSerializer.Deserialize<TheoryResponse>(responseData);
+                var theoryResponse = JsonSerializer.Deserialize<TheoryResponseViewModel>(responseData);
 
-                ViewBag.Theory = theoryResponse?.Theory ?? "No theory generated.";
+                return Json(new { success = true, theory = theoryResponse?.theory ?? "No theory generated." });
+
             }
             catch (Exception ex)
             {
@@ -70,10 +74,7 @@ namespace OnePieceTheoryGeneratingAI.Web.Controllers
 
             return View("Index");
         }
-        public class TheoryResponse
-        {
-            public string Theory { get; set; }
-        }
+
         public IActionResult Privacy()
         {
             return View();
