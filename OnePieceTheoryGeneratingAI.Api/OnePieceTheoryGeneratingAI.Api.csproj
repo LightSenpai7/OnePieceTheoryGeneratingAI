@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageReference Include="OpenAI" Version="1.7.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnePieceTheoryGeneratingAI.Entities\OnePieceTheoryGeneratingAI.Entities.csproj" />
   </ItemGroup>
 
 </Project>

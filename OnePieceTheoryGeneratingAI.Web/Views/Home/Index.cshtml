@@ -1,8 +1,91 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Theory Creation Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+
+    <div class="col-md-12 mb-3">
+        <h4>Create a Theory</h4>
+    </div>
+
+    <form asp-controller="Home" asp-action="Index" method="post" id="theoryForm">
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-12 mb-3">
+            <select name="category" id="category" required class="form-select" aria-label="Default select example">
+                <option selected value="">Select Category</option>
+                <option value="1">Character</option>
+                <option value="2">Episode</option>
+                <option value="3">Universe</option>
+            </select>
+        </div>
+        <div class="col-md-12 mb-3">
+            <div class="form-floating">
+                <textarea name="userThoughts" id="userThoughts" required class="form-control" placeholder="Leave a theory here"></textarea>
+                <label for="userThoughts">Theory</label>
+            </div>
+        </div>
+        <div class="col-md-12 mb-3">
+            <button id="createButton" type="button" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                Response
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p id="responseText">Your generated theory will appear here.</p>
+                    <footer id="responseFooter" class="blockquote-footer"></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#createButton').on('click', function () {
+                const category = $('#category').val();
+                const userThoughts = $('#userThoughts').val();
+
+                if (!category || !userThoughts.trim()) {
+                    $('#responseText').text('Please fill out all fields.').addClass('text-danger');
+                    return;
+                }
+
+                const csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '@Url.Action("Index", "Home")',
+                    type: 'POST',
+                    headers: {
+                        'RequestVerificationToken': csrfToken
+                    },
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        category: category,
+                        userThoughts: userThoughts
+                    }),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#responseText').text(result.theory).removeClass('text-danger');
+                            $('#responseFooter').text('Generated successfully.');
+                        } else {
+                            $('#responseText').text(result.message).addClass('text-danger');
+                        }
+                    },
+                    error: function () {
+                        $('#responseText').text('An error occurred while processing your request.').addClass('text-danger');
+                    }
+                });
+            });
+        });
+    </script>
+}
