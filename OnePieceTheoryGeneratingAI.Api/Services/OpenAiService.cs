@@ -22,18 +22,31 @@ namespace OnePieceTheoryGeneratingAI.Api.Services
         public async Task<string> CompleteSentence(string category, string userThoughts)
         {
             var prompt = $"You are a One Piece expert with in-depth knowledge of the manga, anime, and fan theories. " +
-                         $"Your task is to generate a plausible theory based on the following inputs:\n" +
-                         $"Category: {category}\n" +
-                         $"User's Thoughts: {userThoughts}\n" +
-                         "Please craft a detailed and thoughtful One Piece theory that:\n" +
-                         "- Aligns with the established One Piece universe, including manga, anime, SBS, and databooks.\n" +
-                         "- References relevant story arcs, characters, and events logically.\n" +
-                         "- Explains characters' motivations and actions in a realistic way.\n" +
-                         "- Avoids impossible or overly speculative scenarios, focusing on grounded possibilities.\n" +
-                         "- Integrates recent manga revelations and fan-supported ideas creatively.\n" +
-                         "- Balances originality with acknowledgment of popular fan theories.\n" +
-                         "- Provides clear reasoning and connects seamlessly with existing story elements.\n" +
-                         "Deliver a detailed and thoughtful theory that enhances the One Piece experience.";
+              $"Your task is to generate a plausible and detailed theory based on the following inputs:\n" +
+                  $"Category: {category}\n" +
+                  $"User's Thoughts: {userThoughts}\n\n" +
+                    "Please divide the theory into the following well-structured sections:\n\n" +
+                    "1. **Introduction**:\n" +
+                    "   - Begin with an engaging summary of the theory.\n" +
+                    "   - Explain why this theory is significant within the One Piece universe.\n" +
+                    "   - Provide a brief outline of what will be covered.\n\n" +
+                    "2. **Existing Information**:\n" +
+                    "   - List and explain key details from the manga, anime, SBS, databooks, and fan theories.\n" +
+                    "   - Highlight specific story arcs, character actions, or historical events that support this theory.\n" +
+                    "   - Be specific about quotes, chapter numbers, or notable events.\n\n" +
+                    "3. **Theory Development**:\n" +
+                    "   - Elaborate on the central idea of the theory.\n" +
+                    "   - Explain how this theory logically connects to established story elements.\n" +
+                    "   - Explore character motivations, unresolved mysteries, or symbolic connections.\n" +
+                    "   - Discuss any implications or predictions related to future story developments.\n" +
+                    "   - Use at least two to three examples to solidify the argument.\n\n" +
+                    "4. **Conclusion**:\n" +
+                    "   - Clearly state whether this theory is plausible or not based on the One Piece universe and its established lore.\n" +
+                    "   - If the theory is plausible, explicitly state why it is significant and how it impacts the story, characters, and themes.\n" +
+                    "   - If the theory is not plausible, provide clear reasons for its inconsistency and suggest how the inputs could inspire alternative theories.\n" +
+                    "   - Reflect on how this theory contributes to fan discussions and the broader understanding of One Piece lore.\n" +
+                    "   - Finally, discuss any implications or predictions for future developments in the series." +
+                    "Each section must be detailed, logical, and supported by evidence. Avoid overly speculative ideas, and ensure the theory aligns with established One Piece lore. Use a professional and structured tone to deliver a coherent and immersive experience.";
 
 
             var request = new ChatRequest
