@@ -1,0 +1,55 @@
+.feature-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fas {
+  color: #007bff;
+}
+
+.responsive-container {
+  padding-left: 110px;
+  margin-top: 15%;
+}
+
+@media (max-width: 576px) {
+  .responsive-container {
+    padding-left: 20px;
+    margin-top: 10%;
+    text-align: center;
+  }
+
+  .responsive-container p {
+    font-size: 14px;
+  }
+
+  .responsive-container .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .responsive-container {
+    padding-left: 40px;
+    margin-top: 12%;
+    text-align: left;
+  }
+
+  .responsive-container p {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 769px) {
+  .responsive-container {
+    padding-left: 110px;
+    margin-top: 15%;
+  }
+}
